@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Joy-Con Controller Wheel</title>
+<title>Orbit3D | A 3D Model Viewer</title>
 <style>
 html, body {
   margin: 0;
@@ -65,25 +65,47 @@ html, body {
   gap: 12px;
 }
 
-/* Panel stacking with uniform gap */
-#menu {
+/* Menu panel */
+#menu.panel {
+  position: absolute;
   top: 20px;
   right: 20px;
-  justify-content: flex-start !important;
-  align-items: center !important;
-  padding-left: 0 !important;
-  display: flex;
-  flex-direction: row;
+
+  /* override panel defaults */
+  padding: 0 !important;
+  margin: 0 !important;
+  width: auto !important;
+  border-radius: 15px;
+  border: 2px solid var(--border-color);
+  background: #000;
+
+  /* horizontal row */
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: flex-start;
+
   gap: 10px;
+
+  /* ensure visible gap inside the bar */
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+  height: 60px; /* consistent bar height */
+  box-sizing: border-box;
+
+  /* horizontal scrolling */
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
   scroll-behavior: smooth;
-  scrollbar-width: none;        /* Firefox */
+  scrollbar-width: none;
+
+  width: 389px !important;
 }
-#menu::-webkit-scrollbar {
-  display: none;                /* Chrome/Safari */
-}
+
+/* hide scrollbar */
+#menu.panel::-webkit-scrollbar { display: none; }
+
 #controls {
   top: calc(20px + 60px + var(--panel-gap));
   right: 20px;
@@ -153,6 +175,33 @@ html, body {
   #zoomReminder { top: 200px; }
   .menu-button { padding: 6px 10px; font-size: 0.85em; }
 }
+
+#footer {
+  position: fixed;
+  bottom: 12px;
+  left: 12px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: #9bbcff;
+  background: #000;
+  border: 1px solid #1565c0;
+  border-radius: 8px;
+  opacity: 0.85;
+  z-index: 50;
+  user-select: none;
+  pointer-events: none; /* footer itself doesn't block interactions */
+}
+
+#footer a {
+  color: #5ea0ff;        /* brighter blue for link */
+  text-decoration: none;
+  font-weight: bold;
+  pointer-events: auto;  /* ONLY the link is clickable */
+}
+
+#footer a:hover {
+  text-decoration: underline;
+}
 </style>
 </head>
 <body>
@@ -168,8 +217,10 @@ html, body {
 <!-- Top-right menu -->
 <!-- Top-right menu -->
 <div id="menu" class="panel">
-  <button class="menu-button" data-model="Joy-Con Controller Wheel Parts.obj">Joy-Con Controller Wheel Parts.obj</button>
-  <button class="menu-button" data-model="Built Joy-Con Controller Wheel.obj">Built Joy-Con Controller Wheel.obj</button>
+  <button class="menu-button" data-model="20mm_cube.stl">20mm_cube.stl</button>
+  <button class="menu-button" data-model="airplane.obj">airplane.obj</button>
+  <button class="menu-button" data-model="floatplane.obj">floatplane.obj</button>
+  <button class="menu-button" data-model="alienspaceship.glb">alienspaceship.glb</button>
 </div>
 
 <!-- Controls panel -->
@@ -188,6 +239,12 @@ html, body {
 <!-- Zoom reminder panel -->
 <div id="zoomReminder" class="panel">
   Tip: Use your mouse scroll or touchpad to zoom out and adjust the 3D view.
+</div>
+
+<div id="footer">
+  <a href="https://github.com/abhiraajr/Orbit3D" target="_blank" id="footer-link">Orbit3D</a>
+  © 2025 abhiraajr | Powered by 
+  <a href="https://3dviewer.net" target="_blank" id="viewer-link">3DViewer.net</a>
 </div>
 
 <script>
@@ -233,7 +290,7 @@ function loadIframe(modelPath) {
 }
 
 // Load default model on page load
-loadIframe('Joy-Con Controller Wheel Parts.obj');
+loadIframe('20mm_cube.stl');
 
 // Menu buttons
 buttons.forEach(btn => {
@@ -252,3 +309,13 @@ document.getElementById('applySettings').addEventListener('click', () => {
 
 </body>
 </html>
+
+<!--
+  Orbit3D - Lightweight 3D Model Viewer (Powered by 3DViewer.net)
+  Copyright (c) 2025 Abhiraaj Rampal
+  All rights reserved.
+
+  This project uses the 3DViewer.net embed viewer.
+  3DViewer.net is © by its respective owners and licensed under their own terms.
+  This notice applies only to the Orbit3D wrapper code, not to 3DViewer.net itself.
+-->
